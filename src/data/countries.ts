@@ -233,6 +233,13 @@ const GDELT_VARIANTS: Record<string, string> = {
 };
 
 export function resolveCountryCode(gdeltName: string): string | null {
-  const normalized = gdeltName.trim().toLowerCase();
+  if (!gdeltName) return null;
+  const trimmed = gdeltName.trim();
+  // Handle raw ISO 2-letter codes (e.g. "US", "GB") that GDELT sometimes returns
+  if (trimmed.length === 2) {
+    const upper = trimmed.toUpperCase();
+    if (COUNTRIES[upper]) return upper;
+  }
+  const normalized = trimmed.toLowerCase();
   return GDELT_VARIANTS[normalized] ?? NAME_TO_CODE[normalized] ?? null;
 }
