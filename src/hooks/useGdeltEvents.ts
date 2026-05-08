@@ -3,7 +3,7 @@ import { CountryEvent, Filters, NewsArticle } from '../types';
 import { COUNTRIES, resolveCountryCode } from '../data/countries';
 
 const GDELT_BASE = 'https://api.gdeltproject.org/api/v2/doc/doc';
-// GDELT doesn't send CORS headers — proxy every request through corsproxy.io
+// GDELT does not send CORS headers — proxy every request through corsproxy.io
 const CORS_PROXY = 'https://corsproxy.io/?url=';
 
 const CATEGORY_QUERIES: Record<string, string> = {
