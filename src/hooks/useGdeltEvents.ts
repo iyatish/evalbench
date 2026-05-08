@@ -3,6 +3,8 @@ import { CountryEvent, Filters, NewsArticle } from '../types';
 import { COUNTRIES, resolveCountryCode } from '../data/countries';
 
 const GDELT_BASE = 'https://api.gdeltproject.org/api/v2/doc/doc';
+// GDELT does not send CORS headers — proxy every request through corsproxy.io
+const CORS_PROXY = 'https://corsproxy.io/?url=';
 
 const CATEGORY_QUERIES: Record<string, string> = {
   all: 'world OR international OR global OR national',
@@ -44,7 +46,7 @@ function buildUrl(filters: Filters): string {
     timespan,
     sourcelang: 'english',
   });
-  return `${GDELT_BASE}?${params.toString()}`;
+  return `${CORS_PROXY}${encodeURIComponent(`${GDELT_BASE}?${params.toString()}`)}`;
 }
 
 function aggregateByCountry(articles: GdeltArticle[]): CountryEvent[] {
